@@ -431,3 +431,105 @@ input[type="range"]::-moz-range-thumb {
     border-color: #444;
   }
 }
+
+/* New popup elements */
+.quick-test {
+  background: #f8f9ff;
+  border: 2px dashed #4facfe;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.quick-test h3 {
+  color: #4facfe;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.quick-test p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.test-text {
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #e1e5e9;
+}
+
+.test-text p {
+  line-height: 1.5;
+  color: #333;
+  user-select: text;
+  cursor: text;
+}
+
+.test-text strong {
+  color: #4facfe;
+  font-weight: 600;
+  background: rgba(79, 172, 254, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.features {
+  margin-top: 16px;
+}
+
+.features ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.features li {
+  padding: 4px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Window size selector */
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+  border-color: #4facfe;
+  box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.2);
+}
+
+/* Dark mode for new elements */
+@media (prefers-color-scheme: dark) {
+  .quick-test {
+    background: #2d2d2d;
+    border-color: #4facfe;
+  }
+  
+  .test-text {
+    background: #1a1a1a;
+    border-color: #444;
+  }
+  
+  .test-text p {
+    color: #ffffff;
+  }
+  
+  .features li {
+    color: #cccccc;
+  }
+  
+  select {
+    background: #2d2d2d;
+    color: #ffffff;
+    border-color: #444;
+  }
+}
