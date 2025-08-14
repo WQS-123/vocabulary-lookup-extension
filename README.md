@@ -1,6 +1,6 @@
 # Vocabulary Lookup Extension 📚
 
-A smart Chrome extension that opens Vocabulary.com definitions in a convenient popup window positioned on the right side of your screen.
+A smart Chrome extension that opens Vocabulary.com definitions in a convenient popup window with configurable settings and intelligent positioning.
 
 <p align="center">
   <img src="icons/icon128.png" alt="Extension Icon" width="128" height="128">
@@ -8,19 +8,27 @@ A smart Chrome extension that opens Vocabulary.com definitions in a convenient p
 
 ## ✨ Features
 
-- **🎯 Smart Popup Window** - Opens definitions in a small window (450x650px) on the right side
+- **🎯 Smart Popup Window** - Opens definitions in a configurable window (400x600 to 500x700px)
 - **🧠 Intelligent Positioning** - Automatically adjusts position to avoid going off-screen
-- **📖 No Reading Interruption** - Look up words without losing your place in the text
+- **⚙️ Customizable Settings** - Click extension icon to access settings popup
+- **📊 Usage Statistics** - Track words looked up and popups opened
 - **🔍 Full Vocabulary.com Experience** - Access all features including pronunciations, examples, etymology
-- **⚡ One-Click Access** - Simply right-click any selected text
+- **⚡ Right-Click Access** - Simply right-click any selected text
 - **🎨 Non-Intrusive Design** - Popup doesn't block main content
 
 ## 🚀 How It Works
 
+### 📖 Looking Up Words
 1. **Select** any word or phrase on any webpage
 2. **Right-click** to open the context menu  
 3. **Click** "Look up [word] in Vocabulary.com"
 4. **Enjoy** the definition in a smart popup window!
+
+### ⚙️ Accessing Settings
+1. **Click** the extension icon in your browser toolbar
+2. **Configure** popup settings (enable/disable, positioning, window size)
+3. **View** usage statistics and reset if needed
+4. **Test** the extension with sample words provided
 
 ## 📦 Installation
 
@@ -44,7 +52,8 @@ A smart Chrome extension that opens Vocabulary.com definitions in a convenient p
    - Select the extension folder
    - The extension will appear in your extensions list
 
-4. **Test it out**
+4. **Configure and test**
+   - Click the extension icon to open settings
    - Open `test.html` or visit any webpage
    - Select text, right-click, and enjoy!
 
@@ -52,13 +61,16 @@ A smart Chrome extension that opens Vocabulary.com definitions in a convenient p
 
 ### Architecture
 - **Manifest V3** Chrome extension
-- **Service Worker** background script for context menu handling
+- **Service Worker** background script for context menu handling and settings management
+- **Popup Interface** for extension settings and configuration
 - **Smart Window API** for intelligent popup positioning
+- **Chrome Storage** for persistent settings and usage statistics
 
 ### Permissions
 - `contextMenus` - Create right-click menu options
 - `tabs` - Basic tab operations  
 - `windows` - Create popup windows
+- `storage` - Save user settings and statistics
 
 ### Browser Support
 - Chrome 88+ (Manifest V3 support required)
@@ -69,7 +81,11 @@ A smart Chrome extension that opens Vocabulary.com definitions in a convenient p
 ```
 vocabulary-lookup-extension/
 ├── manifest.json           # Extension configuration
-├── background.js           # Service worker (context menu logic)
+├── background.js           # Service worker (context menu + settings)
+├── popup.html              # Settings popup interface
+├── popup.js                # Popup JavaScript logic
+├── styles/
+│   └── popup.css          # Popup interface styling
 ├── icons/                  # Extension icons
 │   ├── icon16.png
 │   ├── icon32.png
@@ -93,9 +109,15 @@ Perfect for:
 
 ## 🔧 Configuration
 
-The extension works out-of-the-box with optimal settings:
-- **Window Size**: 450×650 pixels
-- **Position**: Right side of current window
+### Extension Settings (Click icon to access)
+- **Enable Extension**: Turn right-click word lookup on/off
+- **Smart Positioning**: Automatically position popup windows optimally  
+- **Window Size**: Choose from Compact (400×600), Standard (450×650), or Large (500×700)
+- **Usage Statistics**: View words looked up and popups opened
+- **Quick Test**: Try the extension with provided sample words
+
+### Default Behavior
+- **Position**: Right side of current window with intelligent adjustment
 - **Margin**: 10px from screen edges
 - **Auto-adjust**: Prevents off-screen positioning
 
@@ -103,14 +125,20 @@ The extension works out-of-the-box with optimal settings:
 
 ### Common Issues
 
-**Right-click menu doesn't appear?**
-- Ensure text is properly selected
-- Check that the extension is enabled
+**Extension icon doesn't show popup?**
+- Ensure extension is properly loaded and enabled
+- Check that popup.html exists in extension folder
 - Try reloading the extension
 
-**Popup doesn't open?**
+**Right-click menu doesn't appear?**
+- Ensure text is properly selected
+- Check that the extension is enabled in popup settings
+- Try reloading the extension
+
+**Popup window doesn't open?**
 - Verify `windows` permission is granted
 - Check browser popup settings
+- Make sure extension is enabled in settings
 - See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for detailed solutions
 
 ### Getting Help
@@ -140,10 +168,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ### Ideas for Enhancement
 
 - [ ] Add keyboard shortcuts
-- [ ] Support for other dictionary sources
-- [ ] Customizable popup size
-- [ ] Dark mode theme
+- [ ] Support for other dictionary sources  
+- [ ] Advanced window positioning options
+- [ ] Enhanced statistics and usage tracking
 - [ ] Export lookup history
+- [ ] Offline word definitions cache
 
 ## 📄 License
 
@@ -157,10 +186,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Stats
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/vocabulary-lookup-extension)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/vocabulary-lookup-extension)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/vocabulary-lookup-extension)
-![Chrome Web Store users](https://img.shields.io/chrome-web-store/users/extension-id)
+![GitHub stars](https://img.shields.io/github/stars/WQS-123/vocabulary-lookup-extension)
+![GitHub forks](https://img.shields.io/github/forks/WQS-123/vocabulary-lookup-extension)
+![GitHub issues](https://img.shields.io/github/issues/WQS-123/vocabulary-lookup-extension)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![Manifest](https://img.shields.io/badge/manifest-v3-green)
 
 ---
 
