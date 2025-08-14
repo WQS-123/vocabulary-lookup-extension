@@ -3,10 +3,8 @@
 // Default settings
 const defaultSettings = {
   enabled: true,
-  autoHide: true,
-  showPronunciation: true,
-  showExamples: true,
-  hideDelay: 10000 // 10 seconds in milliseconds
+  smartPositioning: true,
+  windowSize: 'standard' // compact, standard, large
 };
 
 // Initialize extension
@@ -101,6 +99,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     
     console.log(`Opening popup for "${cleanWord}" at optimized position: ${leftPosition}, ${topPosition}`);
     
+    // Update statistics
+    updateStats();
+    
     // Create a small popup window
     chrome.windows.create({
       url: vocabularyUrl,
@@ -114,4 +115,22 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-console.log('Simple Vocabulary Lookup background script loaded');
+// Update usage statistics
+async function updateStats() {
+  try {
+    const result = await chrome.storage.local.get(['wordsLookedUp', 'popupsOpened']);
+    const wordsLookedUp = (result.wordsLookedUp || 0) + 1;
+    const popupsOpened = (result.popupsOpened || 0) + 1;
+    
+    await chrome.storage.local.set({ 
+      wordsLookedUp: wordsLookedUp,
+      popupsOpened: popupsOpened
+    });
+    
+    console.log(`Stats updated: ${wordsLookedUp} words looked up, ${popupsOpened} popups opened`);
+  } catch (error) {
+    console.error('Failed to update stats:', error);
+  }
+}
+
+console.log('Vocabulary Lookup background script loaded');

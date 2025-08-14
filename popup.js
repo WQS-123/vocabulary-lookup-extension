@@ -3,14 +3,11 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Get DOM elements
   const enabledToggle = document.getElementById('enabled');
-  const autoHideToggle = document.getElementById('autoHide');
-  const showPronunciationToggle = document.getElementById('showPronunciation');
-  const showExamplesToggle = document.getElementById('showExamples');
-  const hideDelaySlider = document.getElementById('hideDelay');
-  const hideDelayValue = document.getElementById('hideDelayValue');
-  const clearCacheButton = document.getElementById('clearCache');
+  const smartPositioningToggle = document.getElementById('smartPositioning');
+  const windowSizeSelect = document.getElementById('windowSize');
+  const clearStatsButton = document.getElementById('clearStats');
   const reportIssueButton = document.getElementById('reportIssue');
-  const rateExtensionButton = document.getElementById('rateExtension');
+  const openVocabularyButton = document.getElementById('openVocabulary');
 
   // Load current settings
   loadSettings();
@@ -18,18 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Event listeners for settings
   enabledToggle.addEventListener('change', saveSettings);
-  autoHideToggle.addEventListener('change', saveSettings);
-  showPronunciationToggle.addEventListener('change', saveSettings);
-  showExamplesToggle.addEventListener('change', saveSettings);
-  hideDelaySlider.addEventListener('input', function() {
-    hideDelayValue.textContent = hideDelaySlider.value + 's';
-    saveSettings();
-  });
+  smartPositioningToggle.addEventListener('change', saveSettings);
+  windowSizeSelect.addEventListener('change', saveSettings);
 
   // Event listeners for buttons
-  clearCacheButton.addEventListener('click', clearCache);
+  clearStatsButton.addEventListener('click', clearStats);
   reportIssueButton.addEventListener('click', reportIssue);
-  rateExtensionButton.addEventListener('click', rateExtension);
+  openVocabularyButton.addEventListener('click', openVocabulary);
 
   // Load settings from storage
   async function loadSettings() {
@@ -39,11 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const settings = response.settings;
         
         enabledToggle.checked = settings.enabled;
-        autoHideToggle.checked = settings.autoHide;
-        showPronunciationToggle.checked = settings.showPronunciation;
-        showExamplesToggle.checked = settings.showExamples;
-        hideDelaySlider.value = settings.hideDelay / 1000; // Convert ms to seconds
-        hideDelayValue.textContent = (settings.hideDelay / 1000) + 's';
+        smartPositioningToggle.checked = settings.smartPositioning;
+        windowSizeSelect.value = settings.windowSize || 'standard';
         
         // Update UI state based on enabled status
         updateUIState(settings.enabled);
@@ -58,10 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
   async function saveSettings() {
     const settings = {
       enabled: enabledToggle.checked,
-      autoHide: autoHideToggle.checked,
-      showPronunciation: showPronunciationToggle.checked,
-      showExamples: showExamplesToggle.checked,
-      hideDelay: parseInt(hideDelaySlider.value) * 1000 // Convert seconds to ms
+      smartPositioning: smartPositioningToggle.checked,
+      windowSize: windowSizeSelect.value
     };
 
     try {
@@ -102,29 +89,30 @@ document.addEventListener('DOMContentLoaded', function() {
   async function updateStats() {
     try {
       // Get current stats from storage
-      const result = await chrome.storage.local.get(['wordsLookedUp', 'cacheSize']);
+      const result = await chrome.storage.local.get(['wordsLookedUp', 'popupsOpened']);
       
       document.getElementById('wordsLookedUp').textContent = result.wordsLookedUp || '0';
-      document.getElementById('cacheSize').textContent = result.cacheSize || '0';
+      document.getElementById('popupsOpened').textContent = result.popupsOpened || '0';
     } catch (error) {
       console.error('Failed to load stats:', error);
       document.getElementById('wordsLookedUp').textContent = '-';
-      document.getElementById('cacheSize').textContent = '-';
+      document.getElementById('popupsOpened').textContent = '-';
     }
   }
 
-  // Clear cache
-  async function clearCache() {
+  // Clear statistics
+  async function clearStats() {
     try {
-      await chrome.storage.local.remove(['cache', 'cacheSize']);
+      await chrome.storage.local.remove(['wordsLookedUp', 'popupsOpened']);
       
-      // Update stats
-      document.getElementById('cacheSize').textContent = '0';
+      // Update stats display
+      document.getElementById('wordsLookedUp').textContent = '0';
+      document.getElementById('popupsOpened').textContent = '0';
       
-      showNotification('Cache cleared', 'success');
+      showNotification('Statistics reset', 'success');
     } catch (error) {
-      console.error('Failed to clear cache:', error);
-      showNotification('Failed to clear cache', 'error');
+      console.error('Failed to reset statistics:', error);
+      showNotification('Failed to reset statistics', 'error');
     }
   }
 
@@ -134,11 +122,9 @@ document.addEventListener('DOMContentLoaded', function() {
     chrome.tabs.create({ url: issueUrl });
   }
 
-  // Rate extension
-  function rateExtension() {
-    // This would typically open the Chrome Web Store page for the extension
-    const storeUrl = 'https://chrome.google.com/webstore/detail/vocabulary-lookup/';
-    chrome.tabs.create({ url: storeUrl });
+  // Open Vocabulary.com
+  function openVocabulary() {
+    chrome.tabs.create({ url: 'https://www.vocabulary.com' });
   }
 
   // Send message to background script
@@ -194,14 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 300);
     }, 3000);
   }
-
-  // Update hide delay value in real-time
-  hideDelaySlider.addEventListener('input', function() {
-    hideDelayValue.textContent = hideDelaySlider.value + 's';
-  });
-
-  // Initialize slider value display
-  hideDelayValue.textContent = hideDelaySlider.value + 's';
 
   console.log('Popup script loaded');
 });
