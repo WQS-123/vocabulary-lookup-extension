@@ -1,8 +1,23 @@
-// Simple Background Service Worker for Vocabulary Lookup Extension
+// Background Service Worker for Vocabulary Lookup Extension
+
+// Default settings
+const defaultSettings = {
+  enabled: true,
+  autoHide: true,
+  showPronunciation: true,
+  showExamples: true,
+  hideDelay: 10000 // 10 seconds in milliseconds
+};
 
 // Initialize extension
 chrome.runtime.onInstalled.addListener(async (details) => {
   console.log('Vocabulary Lookup extension installed/updated');
+  
+  // Initialize settings
+  if (details.reason === 'install') {
+    await chrome.storage.sync.set({ settings: defaultSettings });
+    console.log('Default settings initialized');
+  }
   
   // Create context menu
   chrome.contextMenus.create({
@@ -12,9 +27,39 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   });
   
   if (details.reason === 'install') {
-    console.log('Welcome! Right-click on selected text to look it up on Vocabulary.com');
+    console.log('Welcome! Click the extension icon to access settings, or right-click on selected text to look it up on Vocabulary.com');
   }
 });
+
+// Message handler for popup communication
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  handleMessage(message, sender, sendResponse);
+  return true; // Keep the message channel open for async responses
+});
+
+// Handle messages from popup and content scripts
+async function handleMessage(message, sender, sendResponse) {
+  try {
+    switch (message.action) {
+      case 'getSettings':
+        const result = await chrome.storage.sync.get(['settings']);
+        const settings = { ...defaultSettings, ...(result.settings || {}) };
+        sendResponse({ success: true, settings });
+        break;
+        
+      case 'updateSettings':
+        await chrome.storage.sync.set({ settings: message.settings });
+        sendResponse({ success: true });
+        break;
+        
+      default:
+        sendResponse({ success: false, error: 'Unknown action' });
+    }
+  } catch (error) {
+    console.error('Error handling message:', error);
+    sendResponse({ success: false, error: error.message });
+  }
+}
 
 // Handle context menu clicks
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
