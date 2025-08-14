@@ -1,0 +1,80 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Package lock files (optional - uncomment if you want to ignore them)
+# package-lock.json
+# yarn.lock
+
+# Windows specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Zone.Identifier files (Windows security)
+*.Zone.Identifier
+
+# Chrome extension specific
+.crx
+*.pem
+key.pem
+.crx-temp/
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Documentation drafts (keep only final versions)
+*draft*
+*DRAFT*
+ENHANCED_INSTALLATION.md
+SIMPLE_INSTALLATION.md
+README_FINAL.md
+background-simple.js
+manifest-simple.json
+
+# Test coverage
+coverage/
+
+# Build artifacts
+dist/
+build/
+
+# Cache
+.cache/
+.npm/
+.yarn/

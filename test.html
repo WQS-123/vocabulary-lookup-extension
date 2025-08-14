@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Lookup Extension Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .instruction {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+            margin-bottom: 30px;
+        }
+        
+        .test-content {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #e9ecef;
+        }
+        
+        .highlight-words {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Your Vocabulary Lookup Extension</h1>
+        
+        <div class="instruction">
+            <h3>📋 How to Test (Smart Popup Window):</h3>
+            <ol>
+                <li>Install the Vocabulary Lookup extension in Chrome</li>
+                <li>Select any word or phrase in the text below</li>
+                <li><strong>Right-click</strong> on the selected text</li>
+                <li>Click "Look up [word] in Vocabulary.com" from the context menu</li>
+                <li><strong>A small popup window opens</strong> on the right side of your screen</li>
+                <li>The popup shows Vocabulary.com's definition page without blocking your reading</li>
+                <li>Close the popup when done, and continue reading the main page</li>
+            </ol>
+        </div>
+        
+        <div class="test-content">
+            <h2>Sample Text for Testing</h2>
+            
+            <p>
+                The <span class="highlight-words">serendipitous</span> discovery of the ancient manuscript in the 
+                <span class="highlight-words">dilapidated</span> library was nothing short of 
+                <span class="highlight-words">extraordinary</span>. The scholar's 
+                <span class="highlight-words">meticulous</span> examination revealed 
+                <span class="highlight-words">cryptic</span> symbols and 
+                <span class="highlight-words">enigmatic</span> passages that had remained 
+                <span class="highlight-words">indecipherable</span> for centuries.
+            </p>
+            
+            <p>
+                The <span class="highlight-words">perspicacious</span> researcher's 
+                <span class="highlight-words">tenacious</span> efforts to understand the 
+                <span class="highlight-words">arcane</span> knowledge contained within the tome led to a 
+                <span class="highlight-words">momentous</span> breakthrough. Each 
+                <span class="highlight-words">painstaking</span> analysis of the 
+                <span class="highlight-words">esoteric</span> content revealed new layers of meaning.
+            </p>
+            
+            <p>
+                The <span class="highlight-words">ubiquitous</span> nature of digital technology has created 
+                <span class="highlight-words">unprecedented</span> opportunities for 
+                <span class="highlight-words">collaboration</span> and innovation. However, this digital 
+                <span class="highlight-words">transformation</span> has also introduced new challenges that require 
+                <span class="highlight-words">pragmatic</span> solutions and 
+                <span class="highlight-words">comprehensive</span> strategies.
+            </p>
+            
+            <h3>Simple Words to Test:</h3>
+            <p>
+                Try selecting these common words: <span class="highlight-words">amazing</span>, 
+                <span class="highlight-words">beautiful</span>, <span class="highlight-words">challenge</span>, 
+                <span class="highlight-words">discovery</span>, <span class="highlight-words">education</span>, 
+                <span class="highlight-words">friendship</span>, <span class="highlight-words">happiness</span>, 
+                <span class="highlight-words">knowledge</span>, <span class="highlight-words">language</span>, 
+                <span class="highlight-words">memory</span>.
+            </p>
+            
+            <h3>Advanced Vocabulary:</h3>
+            <p>
+                Test with these challenging words: <span class="highlight-words">epistemology</span>, 
+                <span class="highlight-words">paradigm</span>, <span class="highlight-words">quintessential</span>, 
+                <span class="highlight-words">ameliorate</span>, <span class="highlight-words">elucidate</span>, 
+                <span class="highlight-words">juxtaposition</span>, <span class="highlight-words">ubiquitous</span>, 
+                <span class="highlight-words">ostensible</span>.
+            </p>
+        </div>
+        
+        <div class="instruction">
+            <h3>🔍 What to Look For (Smart Popup Experience):</h3>
+            <ul>
+                <li>Context menu item "Look up [word] in Vocabulary.com" appears when right-clicking on selected text</li>
+                <li><strong>Small popup window opens</strong> positioned on the right side of your screen</li>
+                <li>Popup is perfectly sized (450x650px) and doesn't block your main content</li>
+                <li>The selected word is automatically searched on Vocabulary.com in the popup</li>
+                <li>You get the <strong>full Vocabulary.com experience</strong> in a convenient small window:</li>
+                <ul>
+                    <li>Comprehensive definitions and explanations</li>
+                    <li>Audio pronunciations</li>
+                    <li>Example sentences in context</li>
+                    <li>Synonyms and antonyms</li>
+                    <li>Word origins and etymology</li>
+                    <li>Usage statistics and frequency data</li>
+                    <li>Related words and word families</li>
+                </ul>
+                <li><strong>Smart positioning</strong> - popup adjusts if it would go off-screen</li>
+                <li>Can keep multiple lookups open if needed</li>
+                <li>Easy to close and continue reading your main page</li>
+                <li>Works on any webpage with selectable text</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>🎯 This test page helps you verify that your Vocabulary Lookup extension is working correctly.</p>
+            <p>Try selecting different words - each right-click opens a smart popup window!</p>
+            <p><strong>Perfect for continuous reading while looking up unfamiliar words!</strong></p>
+        </div>
+    </div>
+</body>
+</html>

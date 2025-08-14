@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Lookup Settings</title>
+    <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+    <div class="popup-container">
+        <header class="popup-header">
+            <div class="header-content">
+                <h1>📚 Vocabulary Lookup</h1>
+                <p class="subtitle">Select words to see definitions instantly</p>
+            </div>
+        </header>
+
+        <main class="popup-main">
+            <section class="settings-section">
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <label class="switch">
+                            <input type="checkbox" id="enabled" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="setting-info">
+                            <h3>Enable Extension</h3>
+                            <p>Turn word lookup on/off</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <label class="switch">
+                            <input type="checkbox" id="autoHide" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="setting-info">
+                            <h3>Auto Hide</h3>
+                            <p>Automatically hide tooltip after delay</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <label class="switch">
+                            <input type="checkbox" id="showPronunciation" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="setting-info">
+                            <h3>Show Pronunciation</h3>
+                            <p>Display phonetic pronunciation when available</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <label class="switch">
+                            <input type="checkbox" id="showExamples" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="setting-info">
+                            <h3>Show Examples</h3>
+                            <p>Display usage examples in tooltip</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-info full-width">
+                            <h3>Hide Delay</h3>
+                            <p>Time before tooltip disappears (seconds)</p>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <input type="range" id="hideDelay" min="3" max="30" value="10" step="1">
+                        <span id="hideDelayValue">10s</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stats-section">
+                <h3>📊 Usage Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="wordsLookedUp">-</span>
+                        <span class="stat-label">Words Looked Up</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="cacheSize">-</span>
+                        <span class="stat-label">Cached Definitions</span>
+                    </div>
+                </div>
+                <button id="clearCache" class="secondary-button">Clear Cache</button>
+            </section>
+
+            <section class="info-section">
+                <h3>ℹ️ How to Use</h3>
+                <ol>
+                    <li>Select any word or phrase on a webpage</li>
+                    <li>A tooltip will appear with the definition</li>
+                    <li>Click elsewhere or press Escape to hide</li>
+                </ol>
+                
+                <div class="data-sources">
+                    <p><strong>Data Sources:</strong></p>
+                    <ul>
+                        <li>Free Dictionary API (primary)</li>
+                        <li>Vocabulary.com (fallback)</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer class="popup-footer">
+            <div class="footer-content">
+                <p class="version">v1.0.0</p>
+                <div class="footer-links">
+                    <button id="reportIssue" class="link-button">Report Issue</button>
+                    <button id="rateExtension" class="link-button">Rate Extension</button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
