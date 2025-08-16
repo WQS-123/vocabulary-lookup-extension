@@ -50,6 +50,22 @@ async function handleMessage(message, sender, sendResponse) {
         sendResponse({ success: true });
         break;
         
+      case 'getSearchHistory':
+        const historyResult = await chrome.storage.local.get(['searchHistory']);
+        const history = historyResult.searchHistory || [];
+        sendResponse({ success: true, history });
+        break;
+        
+      case 'clearSearchHistory':
+        await chrome.storage.local.remove(['searchHistory']);
+        sendResponse({ success: true });
+        break;
+        
+      case 'openWordLink':
+        chrome.tabs.create({ url: message.url });
+        sendResponse({ success: true });
+        break;
+        
       default:
         sendResponse({ success: false, error: 'Unknown action' });
     }
@@ -99,6 +115,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     
     console.log(`Opening popup for "${cleanWord}" at optimized position: ${leftPosition}, ${topPosition}`);
     
+    // Save to search history
+    await saveSearchHistory(cleanWord, vocabularyUrl);
+    
     // Update statistics
     updateStats();
     
@@ -130,6 +149,42 @@ async function updateStats() {
     console.log(`Stats updated: ${wordsLookedUp} words looked up, ${popupsOpened} popups opened`);
   } catch (error) {
     console.error('Failed to update stats:', error);
+  }
+}
+
+// Save search history
+async function saveSearchHistory(word, url) {
+  try {
+    const result = await chrome.storage.local.get(['searchHistory']);
+    const history = result.searchHistory || [];
+    
+    // Check if word already exists in history
+    const existingIndex = history.findIndex(item => item.word === word);
+    
+    const historyItem = {
+      word: word,
+      url: url,
+      timestamp: Date.now(),
+      count: existingIndex >= 0 ? history[existingIndex].count + 1 : 1
+    };
+    
+    if (existingIndex >= 0) {
+      // Update existing entry and move to top
+      history.splice(existingIndex, 1);
+    }
+    
+    // Add to beginning of array (most recent first)
+    history.unshift(historyItem);
+    
+    // Limit history to last 100 searches
+    if (history.length > 100) {
+      history.splice(100);
+    }
+    
+    await chrome.storage.local.set({ searchHistory: history });
+    console.log(`Search history updated: "${word}" searched ${historyItem.count} times`);
+  } catch (error) {
+    console.error('Failed to save search history:', error);
   }
 }
 

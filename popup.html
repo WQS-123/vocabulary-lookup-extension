@@ -3,113 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabulary Lookup</title>
+    <title>Vocabulary Lookup - Search History</title>
     <link rel="stylesheet" href="styles/popup.css">
 </head>
 <body>
     <div class="popup-container">
         <header class="popup-header">
             <div class="header-content">
-                <h1>📚 Vocabulary Lookup</h1>
-                <p class="subtitle">Right-click selected words to open definitions</p>
+                <h1>📚 Search History</h1>
+                <p class="subtitle">Your vocabulary lookup history</p>
             </div>
         </header>
 
         <main class="popup-main">
-            <section class="settings-section">
-                <div class="setting-item">
-                    <div class="setting-header">
-                        <label class="switch">
-                            <input type="checkbox" id="enabled" checked>
-                            <span class="slider"></span>
-                        </label>
-                        <div class="setting-info">
-                            <h3>Enable Extension</h3>
-                            <p>Turn right-click word lookup on/off</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-header">
-                        <label class="switch">
-                            <input type="checkbox" id="smartPositioning" checked>
-                            <span class="slider"></span>
-                        </label>
-                        <div class="setting-info">
-                            <h3>Smart Positioning</h3>
-                            <p>Automatically position popup windows optimally</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-header">
-                        <div class="setting-info full-width">
-                            <h3>Popup Window Size</h3>
-                            <p>Size of the vocabulary definition window</p>
-                        </div>
-                    </div>
-                    <div class="setting-control">
-                        <select id="windowSize">
-                            <option value="compact">Compact (400x600)</option>
-                            <option value="standard" selected>Standard (450x650)</option>
-                            <option value="large">Large (500x700)</option>
-                        </select>
-                    </div>
+            <section class="search-section">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search your history..." class="search-input">
+                    <button id="clearSearchBtn" class="clear-search-btn" title="Clear search">✕</button>
                 </div>
             </section>
 
             <section class="stats-section">
-                <h3>📊 Usage Statistics</h3>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <span class="stat-value" id="wordsLookedUp">-</span>
-                        <span class="stat-label">Words Looked Up</span>
+                        <span class="stat-value" id="totalWords">-</span>
+                        <span class="stat-label">Total Words</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-value" id="popupsOpened">-</span>
-                        <span class="stat-label">Popups Opened</span>
+                        <span class="stat-value" id="totalSearches">-</span>
+                        <span class="stat-label">Total Searches</span>
                     </div>
                 </div>
-                <button id="clearStats" class="secondary-button">Reset Statistics</button>
             </section>
 
-            <section class="info-section">
-                <h3>ℹ️ How to Use</h3>
-                <ol>
-                    <li>Select any word or phrase on a webpage</li>
-                    <li>Right-click on the selected text</li>
-                    <li>Choose "Look up '[word]' in Vocabulary.com"</li>
-                    <li>A small popup window will open with the definition</li>
-                </ol>
-                
-                <div class="features">
-                    <p><strong>✨ Features:</strong></p>
-                    <ul>
-                        <li>🎯 Smart window positioning (right side of screen)</li>
-                        <li>📖 Complete Vocabulary.com definitions</li>
-                        <li>🔄 Works on any website</li>
-                        <li>⚡ Fast and lightweight</li>
-                    </ul>
+            <section class="history-section">
+                <div class="section-header">
+                    <h3>📖 Recent Searches</h3>
+                    <button id="clearHistoryBtn" class="clear-history-btn">Clear All</button>
                 </div>
-            </section>
-
-            <section class="quick-test">
-                <h3>🚀 Quick Test</h3>
-                <p>Try it now: Select a word below and right-click!</p>
-                <div class="test-text">
-                    <p>The <strong>serendipitous</strong> discovery led to an <strong>extraordinary</strong> breakthrough in <strong>etymology</strong>.</p>
+                
+                <div id="historyList" class="history-list">
+                    <div class="loading-message">Loading history...</div>
+                </div>
+                
+                <div id="noResults" class="no-results" style="display: none;">
+                    <p>No search results found.</p>
+                </div>
+                
+                <div id="emptyHistory" class="empty-history" style="display: none;">
+                    <p>No search history yet.</p>
+                    <p>Start by right-clicking on any word and selecting "Look up in Vocabulary.com"</p>
                 </div>
             </section>
         </main>
 
         <footer class="popup-footer">
             <div class="footer-content">
-                <p class="version">v2.0.0</p>
+                <p class="version">v2.1.0</p>
                 <div class="footer-links">
                     <button id="openVocabulary" class="link-button">Visit Vocabulary.com</button>
-                    <button id="reportIssue" class="link-button">Report Issue</button>
                 </div>
             </div>
         </footer>
