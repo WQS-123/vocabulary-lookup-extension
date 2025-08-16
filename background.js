@@ -62,7 +62,48 @@ async function handleMessage(message, sender, sendResponse) {
         break;
         
       case 'openWordLink':
-        chrome.tabs.create({ url: message.url });
+        // Open in popup window same as right-click search
+        const currentWindow = await chrome.windows.getCurrent();
+        
+        // Use same popup configuration as context menu search
+        const popupWidth = 450;
+        const popupHeight = 650;
+        
+        // Smart positioning - right side of current window
+        const margin = 10;
+        let leftPosition = currentWindow.left + currentWindow.width - popupWidth - margin;
+        let topPosition = currentWindow.top + 80;
+        
+        // Get screen dimensions (estimate)
+        const screenWidth = currentWindow.left + currentWindow.width + 100;
+        const screenHeight = currentWindow.top + currentWindow.height + 100;
+        
+        // Adjust if popup would go off-screen on the right
+        if (leftPosition + popupWidth > screenWidth) {
+          leftPosition = currentWindow.left - popupWidth - margin;
+        }
+        
+        // Adjust if popup would go off-screen at bottom
+        if (topPosition + popupHeight > screenHeight) {
+          topPosition = screenHeight - popupHeight - margin;
+        }
+        
+        // Ensure minimum top position
+        if (topPosition < 50) {
+          topPosition = 50;
+        }
+        
+        // Create popup window with same style as context menu search
+        chrome.windows.create({
+          url: message.url,
+          type: 'popup',
+          width: popupWidth,
+          height: popupHeight,
+          left: leftPosition,
+          top: topPosition,
+          focused: true
+        });
+        
         sendResponse({ success: true });
         break;
         
