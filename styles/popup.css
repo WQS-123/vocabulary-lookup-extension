@@ -274,10 +274,18 @@ body {
 
 .stat-value {
   display: block;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: #4facfe;
   margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.stat-value:hover {
+  color: #0066cc;
 }
 
 .stat-label {

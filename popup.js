@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const historyList = document.getElementById('historyList');
   const clearHistoryBtn = document.getElementById('clearHistoryBtn');
   const openVocabularyButton = document.getElementById('openVocabulary');
-  const totalWordsSpan = document.getElementById('totalWords');
-  const totalSearchesSpan = document.getElementById('totalSearches');
+  const todayCountSpan = document.getElementById('todayCount');
+  const topWordSpan = document.getElementById('topWord');
   const noResults = document.getElementById('noResults');
   const emptyHistory = document.getElementById('emptyHistory');
 
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
   clearSearchBtn.addEventListener('click', clearSearch);
   clearHistoryBtn.addEventListener('click', clearAllHistory);
   openVocabularyButton.addEventListener('click', openVocabulary);
+  topWordSpan.addEventListener('click', handleTopWordClick);
 
   // Load search history from storage
   async function loadSearchHistory() {
@@ -181,13 +182,47 @@ document.addEventListener('DOMContentLoaded', function() {
     chrome.tabs.create({ url: 'https://www.vocabulary.com' });
   }
 
+  // Handle top word click
+  function handleTopWordClick() {
+    if (allHistory.length > 0 && topWordSpan.textContent !== '-') {
+      const sortedByCount = [...allHistory].sort((a, b) => b.count - a.count);
+      const topWordUrl = sortedByCount[0].url;
+      openWordLink(topWordUrl);
+    }
+  }
+
   // Update statistics
   function updateStats() {
-    const totalWords = allHistory.length;
-    const totalSearches = allHistory.reduce((sum, item) => sum + item.count, 0);
+    // Calculate today's searches
+    const today = new Date();
+    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    const todaySearches = allHistory.filter(item => item.timestamp >= todayStart);
+    const todayCount = todaySearches.reduce((sum, item) => sum + item.count, 0);
     
-    totalWordsSpan.textContent = totalWords.toString();
-    totalSearchesSpan.textContent = totalSearches.toString();
+    // Find most searched word
+    let topWord = '-';
+    if (allHistory.length > 0) {
+      const sortedByCount = [...allHistory].sort((a, b) => b.count - a.count);
+      topWord = sortedByCount[0].word;
+      // Truncate if too long
+      if (topWord.length > 12) {
+        topWord = topWord.substring(0, 12) + '...';
+      }
+    }
+    
+    todayCountSpan.textContent = todayCount.toString();
+    topWordSpan.textContent = topWord;
+    
+    // Add clickable style for top word if it exists
+    if (topWord !== '-') {
+      topWordSpan.style.cursor = 'pointer';
+      topWordSpan.style.textDecoration = 'underline';
+      topWordSpan.title = 'Click to search this word';
+    } else {
+      topWordSpan.style.cursor = 'default';
+      topWordSpan.style.textDecoration = 'none';
+      topWordSpan.title = '';
+    }
   }
 
   // Format timestamp
